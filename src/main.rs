@@ -70,7 +70,11 @@ fn main()
 
     for entry in WalkDir::new(root_path)
     {
-        let entry = entry.unwrap();
+        let entry = match entry
+        {
+            Ok(e) => e,
+            Err(_) => continue,
+        };
 
         let is_directory = !entry.file_type().is_file();
         if is_directory
